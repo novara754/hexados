@@ -1,0 +1,4 @@
+*.bin
+*.iso
+config.bxrc
+bochs.log
