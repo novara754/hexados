@@ -13,7 +13,7 @@ start:
   int 0x13
   jnc .read_second_stage ; Carry bit set if error occured
   mov si, RESET_FLOPPY_ERROR_MSG
-  call print_string
+  call print_string_ln
   jmp .reset_floppy
 
 .read_second_stage:
@@ -32,22 +32,30 @@ start:
   call main ; Jump to and execute second stage
 .read_second_stage_error:
   mov si, READ_SECOND_STAGE_ERROR_MSG
-  call print_string
+  call print_string_ln
   jmp .read_second_stage
 
-RESET_FLOPPY_ERROR_MSG: db "Failed to reset floppy controller. Trying again...", 0
-READ_SECOND_STAGE_ERROR_MSG: db "Failed to read second sector from disk. Trying again...", 0
+RESET_FLOPPY_ERROR_MSG: db `Failed to reset floppy controller. Trying again...`, 0
+READ_SECOND_STAGE_ERROR_MSG: db `Failed to read second sector from disk. Trying again...`, 0
 
-%include "print_string.asm"
+%include "video.asm"
 
 times 510-($-$$) db 0x00
 dw 0xAA55
 
 main:
-  mov si, SUCCESS_MSG
+  call clear_screen
+
+  mov si, WELCOME_MSG
+  call print_string_ln
+
+.command_loop:
+  mov si, CMD_PROMPT
   call print_string
 
   cli
   hlt
 
-SUCCESS_MSG: db "Successfully loaded the second stage.", 0
+WELCOME_MSG: db `Welcome to Project Akuma`, 0
+CMD_PROMPT: db "$ ", 0
+CMD_BUFFER: times 50 db 0
