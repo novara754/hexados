@@ -4,12 +4,12 @@ Simple 16-bit operating system written in x86 assembly language.
 
 ## Building
 
-Un*x
+Bash
 ```
 $ ./build.sh
 ```
 
-Windows
+CMD/Powershell
 ```
 ...> .\build.bat
 ```
