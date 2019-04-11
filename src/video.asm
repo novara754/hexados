@@ -8,16 +8,18 @@ print_string:
 .end:
 	ret
 
-
-print_string_ln:
-	call print_string
-	; Next print carriage return and linefeed
+end_line:
 	mov ah, 0x0E
 	mov al, `\r`
 	int 0x10
 	mov ah, 0x0E
 	mov al, `\n`
 	int 0x10
+	ret
+
+print_string_ln:
+	call print_string
+	call end_line
 	ret
 
 clear_screen:
@@ -31,4 +33,40 @@ clear_screen:
 	mov ah, 0x02 ; Move cursor function
 	mov dx, 0x0000 ; Position
 	int 0x10
+	ret
+
+move_cursor_back:
+	mov ah, 0x03 ; Get cursor position
+	int 0x10
+	cmp dl, 0 ; Check if column is 0 to wrap back to previous line
+	jz .decrease_row
+	sub dl, 1 ; Decrease column by 1
+	jmp .end
+.decrease_row:
+	sub dh, 1
+.end:
+	mov ah, 0x02 ; Set cursor position
+	int 0x10
+	ret
+
+get_input:
+	xor bx, bx
+	xor ax, ax
+	int 0x16
+	cmp ah, 0x0E ; Check if scancode is backspace
+	jz .backspace
+	cmp ah, 0x1C ; Check if scancode is enter
+	jz .enter_key
+	mov ah, 0x0E
+	int 0x10
+	jmp get_input
+.backspace:
+	call move_cursor_back
+	mov ah, 0x0E
+	mov al, ' '
+	int 0x10
+	call move_cursor_back
+	jmp get_input
+.enter_key:
+	call end_line
 	ret

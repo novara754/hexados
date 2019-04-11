@@ -53,6 +53,11 @@ main:
 	mov si, CMD_PROMPT
 	call print_string
 
+	mov si, CMD_BUFFER
+	call get_input
+
+	jmp .command_loop
+
 	cli
 	hlt
 
