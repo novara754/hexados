@@ -38,7 +38,7 @@ start:
 RESET_FLOPPY_ERROR_MSG: db `Failed to reset floppy controller. Trying again...`, 0
 READ_SECOND_STAGE_ERROR_MSG: db `Failed to read second sector from disk. Trying again...`, 0
 
-%include "video.asm"
+%include "print.asm"
 
 times 510-($-$$) db 0x00
 dw 0xAA55
@@ -64,3 +64,5 @@ main:
 WELCOME_MSG: db `Welcome to Project Akuma`, 0
 CMD_PROMPT: db "$ ", 0
 CMD_BUFFER: times 50 db 0
+
+%include "functions.asm"
