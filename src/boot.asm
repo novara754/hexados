@@ -56,6 +56,9 @@ main:
 	mov si, CMD_BUFFER
 	call get_input
 
+	mov si, CMD_BUFFER
+	call print_string_ln
+
 	jmp .command_loop
 
 	cli

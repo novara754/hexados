@@ -33,6 +33,8 @@ get_input:
 	jz .backspace
 	cmp ah, 0x1C ; Check if scancode is enter
 	jz .enter_key
+	mov [si], al ; Move character into string pointed to by si
+	inc si ; Increase si to point to the next slot in the string
 	mov ah, 0x0E
 	int 0x10
 	jmp get_input
