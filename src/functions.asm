@@ -15,7 +15,7 @@ move_cursor_back:
 	mov ah, 0x03 ; Get cursor position
 	int 0x10
 	cmp dl, 0 ; Check if column is 0 to wrap back to previous line
-	jz .decrease_row
+	je .decrease_row
 	sub dl, 1 ; Decrease column by 1
 	jmp .end
 .decrease_row:
@@ -30,9 +30,9 @@ get_input:
 	xor ax, ax
 	int 0x16
 	cmp ah, 0x0E ; Check if scancode is backspace
-	jz .backspace
+	je .backspace
 	cmp ah, 0x1C ; Check if scancode is enter
-	jz .enter_key
+	je .enter_key
 	mov [si], al ; Move character into string pointed to by si
 	inc si ; Increase si to point to the next slot in the string
 	mov ah, 0x0E

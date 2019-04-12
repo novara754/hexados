@@ -28,7 +28,7 @@ start:
 	int 0x13
 	jc .read_second_stage_error ; Carry bit set if error occured
 	cmp al, 0x01 ; Check if the amount of sectors read (AL) is really 1
-	jnz .read_second_stage_error
+	jne .read_second_stage_error
 	call main ; Jump to and execute second stage
 .read_second_stage_error:
 	mov si, READ_SECOND_STAGE_ERROR_MSG
