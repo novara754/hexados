@@ -16,10 +16,10 @@ move_cursor_back:
 	int 0x10
 	cmp dl, 0 ; Check if column is 0 to wrap back to previous line
 	je .decrease_row
-	sub dl, 1 ; Decrease column by 1
+	dec dl ; Decrease column by 1
 	jmp .end
 .decrease_row:
-	sub dh, 1
+	dec dh
 .end:
 	mov ah, 0x02 ; Set cursor position
 	int 0x10
