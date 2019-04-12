@@ -48,3 +48,21 @@ get_input:
 .enter_key:
 	call end_line
 	ret
+
+string_equal:
+	cmp BYTE [si], 0x00
+	je .end_string
+	cmp BYTE [di], 0x00
+	je .end_string
+	mov al, [di]
+	cmp BYTE [si], al
+	jne .end
+	inc si
+	inc di
+	jmp string_equal
+.end_string:
+	mov al, [di]
+	cmp [si], al
+	ret
+.end:
+	ret

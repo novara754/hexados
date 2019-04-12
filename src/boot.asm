@@ -57,8 +57,17 @@ main:
 	call get_input
 
 	mov si, CMD_BUFFER
+	mov di, INFO_CMD_NAME
+	call string_equal
+	jne .not_info
+	call INFO_CMD_RUN
+	jmp .next
+.not_info:
+
+	mov si, NO_SUCH_COMMAND
 	call print_string_ln
 
+.next:
 	jmp .command_loop
 
 	cli
@@ -67,5 +76,14 @@ main:
 WELCOME_MSG: db `Welcome to Project Akuma`, 0
 CMD_PROMPT: db "$ ", 0
 CMD_BUFFER: times 50 db 0
+
+NO_SUCH_COMMAND: db "No such command.", 0
+
+INFO_CMD_NAME: db "info", 0
+INFO_CMD_MESSAGE: db "This is Project Akuma. A simple 16-bit bootloader/operating system written in x86 assembly.", 0
+INFO_CMD_RUN:
+	mov si, INFO_CMD_MESSAGE
+	call print_string_ln
+	ret
 
 %include "functions.asm"
