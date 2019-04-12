@@ -24,3 +24,8 @@ CMD/Powershell:
 
 The build script produces a file called `akuma.iso`.
 Use this image as the first floppy disk and boot from it.
+
+For example:
+```
+$ qemu-system-i386 -fda ./akuma.iso
+```
