@@ -64,6 +64,14 @@ main:
 	jmp .next
 .not_info:
 
+	mov si, CMD_BUFFER
+	mov di, HELP_CMD_NAME
+	call string_equal
+	jne .not_help
+	call HELP_CMD_RUN
+	jmp .next
+.not_help:
+
 	mov si, NO_SUCH_COMMAND
 	call print_string_ln
 
@@ -73,11 +81,18 @@ main:
 	cli
 	hlt
 
-WELCOME_MSG: db `Welcome to Project Akuma`, 0
+WELCOME_MSG: db `Welcome to Project Akuma. Type \`help' for a list of commands.`, 0
 CMD_PROMPT: db "$ ", 0
 CMD_BUFFER: times 50 db 0
 
 NO_SUCH_COMMAND: db "No such command.", 0
+
+HELP_CMD_NAME: db "help", 0
+HELP_CMD_MESSAGE: db "Available commands: help, info.", 0
+HELP_CMD_RUN:
+	mov si, HELP_CMD_MESSAGE
+	call print_string_ln
+	ret
 
 INFO_CMD_NAME: db "info", 0
 INFO_CMD_MESSAGE: db "This is Project Akuma. A simple 16-bit bootloader/operating system written in x86 assembly.", 0
