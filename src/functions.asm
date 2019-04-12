@@ -44,6 +44,7 @@ get_input:
 	mov al, ' '
 	int 0x10
 	call move_cursor_back
+	dec si
 	jmp get_input
 .enter_key:
 	call end_line
