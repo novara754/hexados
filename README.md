@@ -33,4 +33,4 @@ $ qemu-system-i386 -fda ./akuma.iso
 
 ## Images
 
-![https://i.imgur.com/EB8wy0v.png](preview image)
+![preview image](https://i.imgur.com/EB8wy0v.png)
