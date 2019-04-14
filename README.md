@@ -1,6 +1,7 @@
 # Project Akuma
 
-Simple 16-bit bootloader/operating system written in x86 assembly language.
+Simple 16-bit bootloader/operating system written in x86 assembly language.  
+For education purpose only. Under development.
 
 ## Building
 
